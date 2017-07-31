@@ -1,0 +1,58 @@
+{
+    "id": "vasim",
+    "nodes": [
+        {
+            "attributes": {
+                "latched": false,
+                "reportId": "",
+                "symbolSet": "[Matt]"
+            },
+            "enable": "always",
+            "id": "start",
+            "inputDefs": [
+                {
+                    "portId": "i",
+                    "width": 1
+                }
+            ],
+            "outputDefs": [
+                {
+                    "activate": [
+                        {
+                            "id": "stop",
+                            "portId": "i"
+                        }
+                    ],
+                    "portId": "o",
+                    "width": 1
+                }
+            ],
+            "report": false,
+            "type": "hState"
+        },
+        {
+            "attributes": {
+                "latched": false,
+                "reportId": "",
+                "symbolSet": "[Jesse]"
+            },
+            "enable": "onActivateIn",
+            "id": "stop",
+            "inputDefs": [
+                {
+                    "portId": "i",
+                    "width": 1
+                }
+            ],
+            "outputDefs": [
+                {
+                    "activate": [],
+                    "portId": "o",
+                    "width": 1
+                }
+            ],
+            "report": true,
+            "type": "hState"
+        }
+    ]
+}

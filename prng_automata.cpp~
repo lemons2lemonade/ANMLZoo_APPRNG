@@ -1,0 +1,389 @@
+#include "automata.h"
+#include <vector>
+#include <random>
+#include <iostream>
+#include <array>
+#include <stack>
+#define FROM_INPUT_STRING false
+
+using namespace std;
+
+
+
+unsigned int PseudoRandomInt(int range) {
+  int r = rand() % range;
+  return r;
+}
+
+void shuffle(vector<char>* vec, int n){
+    int i,j,tmp;
+
+    for (i = n - 1; i > 0; i--){
+        j = PseudoRandomInt(i+1);
+        tmp = (*vec)[j];
+        (*vec)[j] = (*vec)[i];
+        (*vec)[i] = tmp;
+    }
+}
+
+/*
+vector<char> createRandomSymbolArray(uint32_t length) 
+{
+  
+  vector<char> randomChars(256);
+    for(int i = 0; i < length; i++) {
+        randomChars[i] = (uint32_t)CPURandomInt(NUM_SYMBOLS);
+    }
+
+    return randomChars;
+}
+*/
+
+
+
+/*
+Make a function that takes in MC size and #MCs and creates 
+them.
+
+ */
+void singleMarkovCreator() {
+    //Alphabet size is assumed to be of size 256, and comprised of various random strings
+
+    //Create reporting nodes
+    //Assign transition symbols
+    //Add edges for all the nodes
+
+
+  //For now, I'm making a 2-state markov chain to test
+    vector<int>* alphArray;
+    alphArray->resize(256);
+    for (int a = 0; a < 256; a++){
+        (*alphArray)[a] = a;
+    }
+
+    vector<char> alphCharArray;
+    for(int b : alphArray) alphCharArray.push_back('0'+b);
+
+  
+    shuffle(vector<char>* alphCharArray,256);
+      
+    string str1 = "[";
+    for (int i = 0; i < 232; i++){
+      str1+= alpCharArray[i];
+    }
+    str1 += "]";
+      
+    string str2 = "[";
+    for (int j = 0; j < 34; j++){
+      str2 += alphCharArray[j];
+    }
+    str2 += "]";
+    Automata test;
+    STE *r1 = new STE("one","[*]","all-inputs");
+    STE *r2 = new STE("two","[*]","all-inputs");
+    STE *t1 = new STE("three",str1,"");
+    STE *t2 = new STE("four",str2,"");
+    STE *s1 = new STE("five",str2,"");
+    STE *s2 = new STE("six",str1,"");
+
+    test.rawAddSTE(s1);
+    test.rawAddSTE(s2);
+    test.rawAddSTE(t1);
+    test.rawAddSTE(t2);
+    test.rawAddSTE(r1);
+    test.rawAddSTE(r2);
+    
+    //Note: edges are not bidirectional
+    test.addEdge(r1,s1);
+    test.addEdge(s1,r1);
+    test.addEdge(r1,t1);
+    test.addEdge(t1,r2);
+    test.addEdge(r2,s2);
+    test.addEdge(s2,r2);
+    test.addEdge(r2,t2);
+    test.addEdge(t2,r1);
+    
+    s2->setReporting(true);
+ 
+    //print out how many reports we've seen (should be zero)
+    cout << test.getReportVector().size() << endl;
+
+    test.enableReport();
+    test.initializeSimulation();
+
+     //simulate the automata on two inputs
+    test.simulate('M');
+    test.simulate('J');
+}
+
+vector<char> arrDivider(int numDivisions, vector<char> arr){
+
+}
+
+void markovCreator(int mcStateNum,int numMcs){
+  vector<Automata> mcs;
+  mcs.resize(numMcs);
+  
+  for(int i = 0; i < numMcs; i++){
+      for (int j = 0; j < mcStateNum; j++){
+	  int tranSize = 256/mcStateNum;
+	  alphArray
+
+	    //Add in code to split up alphabet array and use the split
+	    // up array in the lines below
+	  STE *r+to_string(j) = new STE("r"+to_string(j),"[*]","all-inputs");
+	  STE *s+to_string(j) = new STE("s"+to_string(j), leftOverSplit, "");
+	  STE *t+to_string(j) = new STE("t"+to_string(j),str+to_string(j),"");
+
+	  mcs[i].addEdge(r+to_string(j),s+to_string(j));
+          mcs[i].addEdge(s+to_string(j),r+to_string(j));
+          mcs[i].addEdge(r+to_string(j),t+to_string(j));
+
+	  if (j > 0){
+	    int x = j;
+	    while (x > 0){
+	      mcs[i].addEdge(t+to_string(x-1),r+to_string(x));
+	      mcs[i].addEdge(r+to_string(0),t+to_string(x-1));
+	      
+	      STE *tback+to_string(x) = new STE("tback"+to_string(x),str+to_string(j),"");
+	      mcs[i].addEdge(r+to_string(x),tback+to_string(x));
+	      mcs[i].addEdge(tback+to_string(x),r+to_string(x));
+	      mcs[i].addEdge(tback+to_string(x),r+to_string(0));
+	    }
+	  }
+	  if (j == mcStateNum-1){
+	    mcs[i].addEdge(t+to_string(j),r+to_string(0));
+	    mcs[i].addEdge(r+to_string(0),t+to_string(j));
+	  }
+	 
+      }
+  }
+}
+void markovCreatorFINAL_FINAL(int numMcs, int mcStateNum){
+    vector<Automata> mcs;
+    mcs.resize(numMcs);
+
+    for (int h = 0; h < mcs.size(); i++){
+      for (int i = 0; i < numMcs; i++){
+        //Creating base node and stay node and creating a path from each to the other
+        STE *r+to_string(i) = new STE("r"+to_string(i),"[*]","all-inputs");
+	STE *s+to_string(i) = new STE("s"+to_string(i), leftOverSplit, ""); // Check what string will cause this transition
+        mcs[h].addEdge(r+to_string(i),s+to_string(i));
+	mcs[h].addEdge(s+to_string(i),r+to_string(i));
+	
+	for (int j = 0; j < numMcs; j++){
+	  
+	  if (i != j){
+	      String path = to_string(i)+"-"+to_string(j);
+	    
+	      //Creating outbound transition right node and creating a path from the base node
+	      //to the outbound right transition node and a path from the right transition node to the base node
+	      STE *t_out_r+path = new STE("t_out_r"+path,str+to_string(i),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_out_r+path);
+	      mcs[h].addEdge(t_out_r+path,r+to_string(i));
+
+	      //Creating inbound right transition node and connecting it to the base node
+	      STE *t_in_r+path = new STE("t_in_r"+path,!str+to_string(i+1),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_in_r+path);
+	      mcs[h].addEdge(t_in_r+path,r+to_string(i));
+
+	      //Creating outbound transition left node and creating a path from the base node
+	      //to the outbound left transition node and a past from the right transition node to the base node
+	      STE *t_out_l+path = new STE("t_out_l"+path,str+to_string(mcStateNum),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_out_l+path);
+	      mcs[h].addEdge(t_out_l+to_string(i),r+path);
+
+	      //Creating inbound left transition node and connecting it to the base node
+	      STE *t_in_l+path = new STE("t_in_l"+path,!str+to_string(mcStateNum),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_in_l+path);
+	      mcs[h].addEdge(t_in_l+path,r+to_string(i));
+
+	      //Connections
+
+	      //Incoming edge
+	      mcs[h].addEdge(t_out_r+path, r+to_string(i));
+	      //Outgoing edge
+	      mcs[h].addEdge(r+to_string(i),t_out_r+path);
+	
+	      
+	 
+	  }
+	}
+      }
+    }
+}
+    
+void markovCreatorFINAL(int numMCs, int mcStateNum){
+    //Creating a vector of automata objects for later use
+    vector<Automata> mcs;
+    mcs.resize(numMcs);
+
+    std::stack<STE> baseNodes;
+    std::stack<STE> outboundNodesLeft;
+    std::stack<STE> outboundNodesRight;
+    std::stack<STE> inboundNodesLeft;
+    std::stack<STE> inboundNodesRight;
+    for (int h = 0; h < mcs.size(); i++){
+      for (int i = 0; i < mcStateNum; i++){
+	  if(i == 0){
+	      //Creating base node and stay node and creating a path from each to the other
+	      STE *r+to_string(i) = new STE("r"+to_string(i),"[*]","all-inputs");
+	      STE *s+to_string(i) = new STE("s"+to_string(i), leftOverSplit, ""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),s+to_string(i));
+	      mcs[h].addEdge(s+to_string(i),r+to_string(i));
+
+	      //Creating outbound transition right node and creating a path from the base node
+	      //to the outbound right transition node and a path from the right transition node to the base node
+	      STE *t_out_r+to_string(i) = new STE("t_out_r"+to_string(i),str+to_string(i),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_out_r+to_string(i));
+	      mcs[h].addEdge(t_out_r+to_string(i),r+to_string(i));
+
+	      //Creating inbound right transition node and connecting it to the base node
+	      STE *t_in_r+to_string(i) = new STE("t_in_r"+to_string(i),!str+to_string(i+1),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_in_r+to_string(i));
+	      mcs[h].addEdge(t_in_r+to_string(i),r+to_string(i));
+
+	      //Creating outbound transition left node and creating a path from the base node
+	      //to the outbound left transition node and a past from the right transition node to the base node
+	      STE *t_out_l+to_string(i) = new STE("t_out_l"+to_string(i),str+to_string(mcStateNum),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_out_l+to_string(i));
+	      mcs[h].addEdge(t_out_l+to_string(i),r+to_string(i));
+
+	      //Creating inbound left transition node and connecting it to the base node
+	      STE *t_in_l+to_string(i) = new STE("t_in_l"+to_string(i),!str+to_string(mcStateNum),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_in_l+to_string(i));
+	      mcs[h].addEdge(t_in_l+to_string(i),r+to_string(i));
+
+	      //push everything to stack for later use now:
+	      baseNodes.push(r+to_string(i));
+	      outboundNodesLeft.push(t_out_l+to_string(i));
+	      outboundNodesRight.push(to_out_r+to_string(i));
+	      inboundNodesLeft.push(t_in_l+to_string(i));
+	      inboundNodesRight.push(t_in_r+to_string(i));
+	      
+	      
+	  }
+	  else if (i > 0 && i < mcStateNum - 1){
+
+	     //Creating base node and stay node and creating a path from each to the other
+	      STE *r+to_string(i) = new STE("r"+to_string(i),"[*]","all-inputs");
+	      STE *s+to_string(i) = new STE("s"+to_string(i), leftOverSplit, ""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),s+to_string(i));
+	      mcs[h].addEdge(s+to_string(i),r+to_string(i));
+
+	      //Creating outbound transition right node and creating a path from the base node
+	      //to the outbound right transition node and a path from the right transition node to the base node
+	      STE *t_out_r+to_string(i) = new STE("t_out_r"+to_string(i),str+to_string(i),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_out_r+to_string(i));
+	      mcs[h].addEdge(t_out_r+to_string(i),r+to_string(i));
+
+	      //Creating inbound right transition node and connecting it to the base node
+	      STE *t_in_r+to_string(i) = new STE("t_in_r"+to_string(i),!str+to_string(i+1),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_in_r+to_string(i));
+	      mcs[h].addEdge(t_in_r+to_string(i),r+to_string(i));
+
+	      //Creating outbound transition left node and creating a path from the base node
+	      //to the outbound left transition node and a past from the right transition node to the base node
+	      STE *t_out_l+to_string(i) = new STE("t_out_l"+to_string(i),str+to_string(),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_out_l+to_string(i));
+	      mcs[h].addEdge(t_out_l+to_string(i),r+to_string(i));
+
+	      //Creating inbound left transition node and connecting it to the base node
+	      STE *t_in_l+to_string(i) = new STE("t_in_l"+to_string(i),str+to_string(i-1),""); // Check what string will cause this transition
+	      mcs[h].addEdge(r+to_string(i),t_in_l+to_string(i));
+	      mcs[h].addEdge(t_in_l+to_string(i),r+to_string(i));
+
+	      // curr_base_node used as a stop condition for the while loop
+	      //(after the necessary connections to previous ste's have been made,
+	      //it will be added to the stack for use in the next node's connections)
+	      STE* nodeToBeAdded = r+to_string(i);
+   
+	      //pop from stacks and connect:
+	      while (baseNodes.top() != (*nodeToBeAdded)){
+		//Connecting Left back-moving edge of curr_node to right outgoing edge of prev_node
+		mcs[h].addEdge(r+to_string(i),inboundNodesRight.pop());
+
+		//Connecting Left incoming edge of curr_node to the prev_nodes' outgoing right ste
+		mcs[h].addEdge(outboundNodesRight.pop(),r+to_string(i));
+		mcs[h].
+
+	      }
+	    
+	  }
+	  
+    }
+    }
+}
+void improvedMarkovCreator(int numMCs, int mcStateNum){
+  vector<Automata> mcs;
+  mcs.resize(numMcs);
+  int j = 0;
+  if(mcStateNum == 0){
+      //Incoming stay-edges and STES:
+      STE *r+to_string(j) = new STE("r"+to_string(j),"[*]","all-inputs");
+      STE *s+to_string(j) = new STE("s"+to_string(j), leftOverSplit, "");
+      mcs[i].addEdge(r+to_string(j),s+to_string(j));
+      mcs[i].addEdge(s+to_string(j),r+to_string(j));
+
+      //Left-side Incoming transition-edge and STE:
+      STE *t+to_string(j) = new STE("t"+to_string(j),str+to_string(j),"");
+      mcs[i].addEdge(r+to_string(j),t+to_string(j));
+
+      
+
+      mcs[i].addEdge(r+to_string(j),s+to_string(j));
+      mcs[i].addEdge(s+to_string(j),r+to_string(j));
+      mcs[i].addEdge(r+to_string(j),t+to_string(j));
+
+      j++;
+  }
+  if(mcStateNum == 1){
+    STE *r+to_string(j) = new STE("r"+to_string(j),"[*]","all-inputs");
+ STE *t+to_string(j) = new STE("t"+to_string(j),str+to_string(j),"");
+
+  }
+
+
+}
+
+
+
+int main(int argc, char * argv[]) {
+  /*
+  Automata ap;
+
+  STE *start = new STE("start", "[Matt]","all-input");
+  STE *stop = new STE("stop", "[Jesse]", "none");
+  stop->setReporting(true);
+
+  //Add them to data structure
+  ap.rawAddSTE(start);
+  ap.rawAddSTE(stop);
+
+  //add edge between them
+  ap.addEdge(start,stop);
+
+  // Emit automata as anml file
+  ap.automataToANMLFile("example.anml");
+  ap.automataToMNRLFile("example.mrnl");
+
+  //print out how many reports we've seen (should be zero)
+  cout << ap.getReportVector().size() << endl;
+  
+  //enable report gathering for the automata
+  ap.enableReport();
+  
+  //initialize simulation
+  ap.initializeSimulation();
+  
+  //simulate the automata on two inputs
+  ap.simulate('M');
+  ap.simulate('J');
+  
+  
+  //print out how many reports we've seen (should be 2)
+  cout << ap.getReportVector().size() <<endl;
+  */
+
+  singleMarkovCreator();
+}
