@@ -97,7 +97,7 @@ void addNewMarkovChain(Automata a,int numStates){
     }
   }
 }
-
+}
 
 
 /*
@@ -396,3 +396,4 @@ int main(int argc, char * argv[]) {
 
   alphDivider(8,createSymbolArray(256));
 }
+
