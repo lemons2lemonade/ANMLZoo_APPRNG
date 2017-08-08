@@ -1,5 +1,5 @@
 CC=g++-5
-FLAGS=-O3 --std=c++11 -pthread -DDEBUG=false
+FLAGS=-O3 --std=c++11 -pthread -DDEBUG=false -g
 VASIM=../../VASim
 MNRL=$(VASIM)/MNRL/C++
 LIBMNRL=$(MNRL)/libmnrl.a
