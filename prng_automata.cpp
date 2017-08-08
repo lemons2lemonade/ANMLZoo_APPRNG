@@ -27,13 +27,13 @@ vector<vector<char>> alphDivider(int numStates, vector<char> alphArray){
   vector<vector<char>> transitionList;
   int subListEntriesNum = alphArray.size()/(numStates*numStates);
   transitionList.resize(numStates, vector<char>(subListEntriesNum));//Want to create a list of lists and have each sublist be subListEntriesNum large
-  
+  int numSq = numStates*numStates; 
   vector< vector<char> >::iterator row;
   vector<char>::iterator col;
   
-  for(int row = 0; row < subListEntriesNum; row++) {
+  for(int row = 0; row < numSq; row++) {
 
-    for(int col = 0; col < numStates; col++) {
+    for(int col = 0; col < subListEntriesNum; col++) {
 
       int randIndex = rand() % alphArray.size();
       transitionList.at(row).at(col) = alphArray[randIndex];
@@ -67,13 +67,14 @@ void addNewMarkovChain(Automata* a,int numStates,vector<vector<char>> splitArr){
   tOutDynamicVars.resize(numStates*numStates);
   tInDynamicVars.resize(numStates*numStates);
   std::unordered_map<string, Element *> elements = a->getElements();
-  int count = 0;
+  int countI = 0;
+  int countJ = 0;
   for (int i = 0; i < numStates; i++){
         STE *r = new STE("r"+to_string(i),"[*]","all-inputs");
 	STE *s = new STE("s"+to_string(i), "", ""); // Check what string will cause this transition
 	a->rawAddSTE(r);
 	a->rawAddSTE(s);
-
+	
         a->addEdge(elements["r"+to_string(i)],elements["s"+to_string(i)]);
         a->addEdge(elements["s"+to_string(i)],elements["r"+to_string(i)]);
 
@@ -98,12 +99,13 @@ void addNewMarkovChain(Automata* a,int numStates,vector<vector<char>> splitArr){
 	      a->addEdge(elements["r"+to_string(j)],elements[in_path]); //mcs[count]
 	      a->addEdge(elements[in_path],elements["r"+to_string(i)]); //mcs[count]
 
-	      count++;
-
+	      countI++;
+	      countJ+=3;
       
     }
   }
-}
+    	countI++;
+  }
 }
 
 
