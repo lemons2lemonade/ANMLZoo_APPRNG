@@ -1,0 +1,27 @@
+
+
+
+vector<vector<char>> alphDivider(int numStates, vector<char> alphArray){
+  
+  vector<vector<char>> transitionList;
+  int subListEntriesNum = alphArray.size()/numStates;
+  transitionList.resize(numStates, vector<char>(subListEntriesNum));//Want to create a list of lists and have each sublist be subListEntriesNum large
+  
+  vector< vector<char> >::iterator row;
+  vector<char>::iterator col;
+  
+  for(int row = 0; row < subListEntriesNum; row++) {
+
+    for(int col = 0; col < numStates; col++) {
+
+      int randIndex = rand() % 256;
+      transitionList.at(row).at(col) = alphArray[randIndex];
+      alphArray.erase(alphArray.begin()+randIndex);
+     
+    }
+  }
+
+    return transitionList;
+
+}
+

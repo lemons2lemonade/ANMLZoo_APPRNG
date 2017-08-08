@@ -187,7 +187,7 @@ void markovCreatorFINAL_FINAL(int numMcs, int mcStateNum){
     for (int e = 0; e < mcStateNum; e++){
       	STE* r = new STE("r"+to_string(e),"[*]","all-inputs");
 	STE* s = new STE("s"+to_string(e),"", ""); // Check what string will cause this transition
-
+	
 
 	nodes.push_back(s); // Check what string will cause this transition
 	nodes.push_back(r);
