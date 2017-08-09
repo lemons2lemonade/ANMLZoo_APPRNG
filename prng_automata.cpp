@@ -36,6 +36,8 @@ vector<vector<char>> alphDivider(int numStates, vector<char> alphArray){
     for(int col = 0; col < subListEntriesNum; col++) {
 
       int randIndex = rand() % alphArray.size();
+      cout << randIndex<<endl;
+      cout << alphArray.size()<<endl;
       transitionList.at(row).at(col) = alphArray[randIndex];
       alphArray.erase(alphArray.begin()+randIndex);
      
