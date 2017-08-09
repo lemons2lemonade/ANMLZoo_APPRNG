@@ -122,7 +122,7 @@ int main(int argc, char * argv[]) {
 
   std::vector<std::vector<char>> test = alphDivider(8,createSymbolArray(256));
   for(int i = 0; i < test.size(); i++){
-    for(int j = 0; test.at(i).size(); j++){
+    for(int j = 0; j < test.at(i).size(); j++){
       cout << test.at(i).at(j)<<endl;
     }
   }
