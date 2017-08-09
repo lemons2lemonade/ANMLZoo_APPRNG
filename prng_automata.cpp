@@ -63,11 +63,12 @@ void addNewMarkovChain(Automata* a,int numStates,vector<vector<char>> splitArr){
   //TODO: ASSIGN TRANSITION STRINGS TO GENERATED STES
   //vector<STE *> mcs;
   //mcs.resize(numStates * numStates);
-  
+  /*
   vector<STE *> tOutDynamicVars;
   vector<STE *> tInDynamicVars;
   tOutDynamicVars.resize(numStates*numStates);
   tInDynamicVars.resize(numStates*numStates);
+  */
   std::unordered_map<string, Element *> elements = a->getElements();
   int countI = 0;
   int countJ = 0;
@@ -88,16 +89,20 @@ void addNewMarkovChain(Automata* a,int numStates,vector<vector<char>> splitArr){
 	      //Creating outbound transition node and creating a path from the base node 
 	      //to the outbound transition node and a path from the transition node to the j node
 	      
-	      tOutDynamicVars[count] = new STE(out_path,"",""); //SET TRANSITION STRING HERE
-	      a->rawAddSTE(tOutDynamicVars[count]);
+	      //tOutDynamicVars.at(count) = new STE(out_path,"",""); //SET TRANSITION STRING HERE
+	      //a->rawAddSTE(tOutDynamicVars.at(count));
+	      a->rawAddSTE(new STE(out_path,"",""));
+
 	      
 	      a->addEdge(elements["r"+to_string(i)],elements[out_path]); //mcs[count]
 	      a->addEdge(elements[out_path],elements["r"+to_string(j)]); //mcs[count]
 
 	      //Creating inbound transition node and connecting it to the base node and j node
 	      // OLD WAY: STE *t_in+path = new STE("t_in"+path,!str+to_string(i+1),""); // Check what string will cause this transition
-	      tInDynamicVars[count] = new STE(out_path,"",""); //SET TRANSITION STRING HERE
-	      a->rawAddSTE(tInDynamicVars[count]);
+	      // tInDynamicVars.at(count) = new STE(out_path,"",""); //SET TRANSITION STRING HERE
+	      // a->rawAddSTE(tInDynamicVars.at(count));
+	      a->rawAddSTE(new STE(in_path,"",""));
+	      
 	      a->addEdge(elements["r"+to_string(j)],elements[in_path]); //mcs[count]
 	      a->addEdge(elements[in_path],elements["r"+to_string(i)]); //mcs[count]
 
