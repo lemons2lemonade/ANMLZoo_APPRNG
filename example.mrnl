@@ -34,7 +34,7 @@
             "attributes": {
                 "latched": false,
                 "reportId": "",
-                "symbolSet": "[Jesse]"
+                "symbolSet": "[Bimmy]"
             },
             "enable": "onActivateIn",
             "id": "stop",

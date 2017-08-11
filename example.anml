@@ -1,6 +1,6 @@
 <anml version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <automata-network id="vasim">
-<state-transition-element id="stop"  symbol-set="[Jesse]"  start="none">
+<state-transition-element id="stop"  symbol-set="[Bimmy]"  start="none">
 	<report-on-match/>
 </state-transition-element>
 <state-transition-element id="start"  symbol-set="[Matt]"  start="all-input">
