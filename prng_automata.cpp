@@ -13,9 +13,9 @@ vector<char> createSymbolArray(uint32_t length)
 {
   
   vector<char> randomChars;
-  randomChars.resize(length);
+  //randomChars.resize(length);
     for(int i = 0; i < length; i++) {
-      randomChars[i] = (char)i;
+      randomChars.push_back( (char)i);
     }
 
     return randomChars;
@@ -28,23 +28,30 @@ vector<vector<char>> alphDivider(int numStates, vector<char> alphArray){
   
   vector<vector<char>> transitionList;
   int subListEntriesNum = alphArray.size()/(numStates*numStates);
-  transitionList.resize(numStates, vector<char>(subListEntriesNum));//Want to create a list of lists and have each sublist be subListEntriesNum large
+  //transitionList.resize(numStates, vector<char>(subListEntriesNum));//Want to create a list of lists and have each sublist be subListEntriesNum large
   int numSq = numStates*numStates; 
 
-
+  int rowCount = 0;
   //FIX THE TYPE ERRORS IN THE LOOPS IMMEDIATELY BELOW
   // Initialize Vectors
   for(int row = 0; row < numSq; row++) {
     vector<char> column;
-  
+    cout << "Row Count: "<<rowCount<<endl;
     for(int col = 0; col < subListEntriesNum; col++) {
       //transitionList.at(row).push_back('\0'); //CHECK THIS LINE
-      column.push_back('\0');
+      int randIndex = rand() % alphArray.size();
+      cout <<"Getting Pushed into array: "<< randIndex <<endl;
+      column.push_back(alphArray[randIndex]);
+      alphArray.erase(alphArray.begin()+randIndex);
+      //column.push_back('\0');
       
     }
     transitionList.push_back(column);
+    rowCount++;
   }
 
+  cout << "FINAL ROW COUNT: "<<rowCount<<endl;
+  /*
   // Fill vectors with data
   for(int row = 0; row < numSq; row++) {
     //cout << "Row: "<<row<<endl;
@@ -57,7 +64,7 @@ vector<vector<char>> alphDivider(int numStates, vector<char> alphArray){
       alphArray.erase(alphArray.begin()+randIndex);
     }
   }
-
+  */
   cout << "Ending alphDivider..." << endl;
   
     return transitionList;
@@ -67,7 +74,7 @@ vector<vector<char>> alphDivider(int numStates, vector<char> alphArray){
 void create(int numMarkovChains, int numStates,vector<char> alphArr,Automata* a){
 
 
-  for(int i = 0; i < numMarkovChains; i++){
+  for(int e = 0; e < numMarkovChains; e++){
     vector<vector<char>> splitArray = alphDivider(numStates,alphArr);
     addNewMarkovChain(a,numStates,splitArray);
   }
@@ -96,10 +103,17 @@ void addNewMarkovChain(Automata* a,int numStates,vector<vector<char>> splitArr){
 	cout << "Starting first if branch..."<<endl;
 	if(i == 0){
 	//Set stay transition set for each report node
+	  for (int z = 0; z < splitArr.size(); z++){
+	    cout << "Row In splitArr..."<<endl;
+	  }
+
+
+
+	  
 	  cout << "Inside first if branch..."<<endl;
 	  cout << "SplitArr.size(): "<<splitArr.size()<<endl;
-	  cout <<"splitArr.at(0).size(): "<<splitArr.at(19).size()<<endl;
-	  for (int k = 0; k < splitArr.at(splitArr.size()-1).size()-1; k++){
+	  //  cout <<"splitArr.at(5).size(): "<<splitArr.at(5).size()<<endl;
+	  for (int k = 0; k < splitArr.at(splitArr.size()-1).size(); k++){
 	    cout << "K: " << k<<endl;
 	    cout << "I: " <<i<<endl;
 	    cout << "ITEM ADDED TO TRANSITION: " << splitArr.at(countI).at(k) << endl;
@@ -199,7 +213,8 @@ int main(int argc, char * argv[]) {
   
   Automata* a = new Automata;
 
-  create(2,4,createSymbolArray(256),a);
+  //create(int numMarkovChains, int numStates,vector<char> alphArr,Automata* a)
+  create(1,2,createSymbolArray(256),a);
   
   /*
   STE *start = new STE("start", "[Matt]","all-input");
